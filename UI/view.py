@@ -39,7 +39,7 @@ class View(ft.UserControl):
                                                           on_click= self._controller.handlePrintIscrittiCorsiPD,
                                                           width= 300)
 
-        row1 = ft.Row([self._ddPD, self._btnPrintCorsiPD, self._btnPrintIscrittiCorsiPD])
+        row1 = ft.Row([self._ddPD, self._btnPrintCorsiPD, self._btnPrintIscrittiCorsiPD], alignment = ft.MainAxisAlignment.CENTER)
 
         self._ddCodIns = ft.Dropdown(label = "Corso",
                                      width= 200)
@@ -52,7 +52,7 @@ class View(ft.UserControl):
                                                     on_click= self._controller.handlePrintCDSCodins,
                                                     width= 300)
 
-        row2 = ft.Row([self._ddCodIns, self._btnPrintIscrittiCodins,self._btnPrintCDSCodins])
+        row2 = ft.Row([self._ddCodIns, self._btnPrintIscrittiCodins,self._btnPrintCDSCodins], alignment = ft.MainAxisAlignment.CENTER)
         self._page.add(row1, row2)
 
         # List View where the reply is printed
