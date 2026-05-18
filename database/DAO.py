@@ -98,7 +98,7 @@ class DAO():
 
         query = """ select s.*
                     from iscrizione i, studente s
-                    where i.matricola = i.matricola 
+                    where i.matricola = s.matricola 
                     and i.codins = %s"""
 
         cursor.execute(query, (codins,))
@@ -106,6 +106,28 @@ class DAO():
         res = []
         for row in cursor:
             res.append(Studente(**row))
+
+        cursor.close()
+        cnx.close()
+        return res
+
+    @staticmethod
+    def getCDSofCorso(codins):
+        cnx = DBConnect.get_connection()
+        cursor = cnx.cursor(dictionary=True)
+
+        query = """ select s.CDS , count(*) as n
+                    from studente s ,iscrizione i
+                    where s.matricola = i.matricola 
+                    and i.codins = %s
+                    and s.CDS != ""
+                    group by s.CDS """
+
+        cursor.execute(query, (codins,))
+
+        res = []
+        for row in cursor:
+            res.append((row["CDS"], row["n"]))
 
         cursor.close()
         cnx.close()

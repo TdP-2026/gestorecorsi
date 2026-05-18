@@ -10,6 +10,7 @@ class Controller:
         self._ddCodinsValue = None
 
     def handlePrintCorsiPD(self, e):
+        self._view.txt_result.controls.clear()
         pd = self._view._ddPD.value
 
         if pd is None:
@@ -37,6 +38,7 @@ class Controller:
         self._view.update_page()
 
     def handlePrintIscrittiCorsiPD(self, e):
+        self._view.txt_result.controls.clear()
         pd = self._view._ddPD.value
 
         if pd is None:
@@ -66,6 +68,7 @@ class Controller:
         self._view.update_page()
 
     def handlePrintIscrittiCodins(self, e):
+        self._view.txt_result.controls.clear()
 
         if self._ddCodinsValue is None:
             self._view.create_alert("Per favore selezionare un insegnamento.")
@@ -76,8 +79,8 @@ class Controller:
 
         if not len(studenti):
             self._view.txt_result.controls.append(ft.Text(
-                "Nessuno studente iscritto a questo corso"
-            ))
+                "Nessuno studente iscritto a questo corso")
+            )
             self._view.update_page()
             return
 
@@ -93,7 +96,27 @@ class Controller:
         self._view.update_page()
 
     def handlePrintCDSCodins(self, e):
-        pass
+        self._view.txt_result.controls.clear()
+
+        if self._ddCodinsValue is None:
+            self._view.create_alert("Per favore selezionare un insegnamento.")
+            self._view.update_page()
+            return
+
+        cds = self._model.getCDSofCorso(self._ddCodinsValue.codins)
+
+        if not len(cds):
+            self._view.txt_result.controls.append(ft.Text(f"Nessun CDS afferente al corso {self._ddCodinsValue}"))
+            self._view.update_page()
+            return
+
+        self._view.txt_result.controls.append(
+            ft.Text(f"Di seguito i CDS che frequentano il corso {self._ddCodinsValue}")
+        )
+
+        for c in cds:
+            self._view.txt_result.controls.append(ft.Text(f"{c[0]} -- N iscritti: {c[1]}"))
+        self._view.update_page()
 
     def fillddCodins(self):
         #for cod in self._model.getCodins():

@@ -23,3 +23,8 @@ class Model:
         studenti = DAO.getStudenticorso(codins)
         studenti.sort(key = lambda s:s.cognome)
         return studenti
+
+    def getCDSofCorso(self, codins):
+        cds = DAO.getCDSofCorso(codins)
+        cds.sort(key = lambda c:c[1], reverse = True)
+        return cds
